@@ -20,12 +20,12 @@ locals {
     port                         = 3306
     db_instance_count            = 1
     rds_engine                   = "aurora-mysql"
-    engine_version               = "5.7.mysql_aurora.2.11.2"
+    engine_version               = "8.0.mysql_aurora.3.03.1"
     snapshot_identifier          = ""
     instance_class               = ""
     db_master_username           = "clinicalscorUser"
-    cluster_param_group_name     = "default.aurora-mysql5.7"
-    param_group_name             = "default.aurora-mysql5.7"
+    cluster_param_group_name     = "default.aurora-mysql8.0"
+    param_group_name             = "default.aurora-mysql8.0"
     backup_window                = "06:45-07:15"
     maintenance_window           = "sun:06:00-sun:06:30"
     backup_retention             = 30
