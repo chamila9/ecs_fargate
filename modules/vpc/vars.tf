@@ -33,12 +33,12 @@ variable vpc {
 variable public_cidrs {
   type        = list(string)
   description = "List of IPv4 CIDR blocks used for public subnets"
-  default     = ["172.16.0.0/24", "172.16.1.0/24"]
+  default     = []
 }
 
 # Configured private subnets on the "back" half of the vpc cidr block
 variable private_cidrs {
   type        = list(string)
   description = "List of IPv4 CIDR blocks used for private subnets"
-  default     = ["172.16.8.0/23", "172.16.10.0/23"]
+  default     = []
 }
