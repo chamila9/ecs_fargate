@@ -33,9 +33,9 @@ variable app {
 variable splunk {
   type = map(string)
   default = {
-    token = "6909f85d-9319-40f2-acbb-21976263b698"
-    index = "app_clinicalscoring"
-    url   = "https://http-inputs-pearsonedu.splunkcloud.com:443/services/collector/event"
+    token = ""
+    index = ""
+    url   = ""
   }
 }
 

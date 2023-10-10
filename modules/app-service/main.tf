@@ -329,12 +329,10 @@ data "template_file" "app_tmpl" {
     region                           = var.env.region
     network_mode                     = local.app.network_mode
     container_name                   = "app-service"
-    //confd_dynamo_table               = data.aws_dynamodb_table.confd.id
     app_image                        = "${var.env.aws_account}.dkr.ecr.${var.env.region}.amazonaws.com/${local.app.app_repo_name}:${var.app_image_version}"
     app_cpu                          = local.app.app_cpu
     host_port                        = local.app.host_port
     container_port                   = local.app.container_port
-    //confd_image                      = "${var.env.aws_account}.dkr.ecr.${var.env.region}.amazonaws.com/${var.confd.confd_repo_name}:${var.confd.confd_image_version}"
     cw_log_stream                    = local.app.app_suffix
     app_suffix                       = "app"
 	  cw_log_group                     = "/${var.tags.environment}/app"
