@@ -1,0 +1,74 @@
+[
+  {
+    "environment":[
+       {
+          "name": "APPLICATION_ENVIRONMENT",
+          "value": "${environment}"
+       }
+    ],
+    "essential":false,
+    "name":"secrets-provider",
+    "image": "${secrets_provider_image}",
+    "memoryReservation": 64,
+    "cpu": 10,
+    "portMappings":[],
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "secretOptions": null,
+      "options": {
+        "awslogs-group":  "${cw_log_group}",
+        "awslogs-region": "${region}",
+        "awslogs-stream-prefix": "${cw_log_stream}"
+      }
+    }
+  },
+  {
+    "essential": true,
+    "name": "${container_name}",
+    "image": "${app_image}",
+    "cpu": ${app_cpu},
+    "memory": ${app_memory},
+    "memoryReservation": ${app_memory},
+    "networkMode": "${network_mode}",
+    "linuxParameters": {
+      "initProcessEnabled": true
+    },
+    "portMappings": [
+      {
+        "hostPort": ${container_port},
+        "containerPort": ${container_port},
+        "protocol": "tcp"
+      }
+    ],
+    "environment": [
+      { "name": "APPLICATION_ENVIRONMENT", "value": "${environment}" },
+      { "name": "AWS_DEFAULT_REGION", "value": "${region}" },
+	    { "name": "AWS_REGION", "value": "${region}" },
+      { "name": "ADDL_JVM_OPTS", "value": "${add_java_opts}"}
+    ],
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "secretOptions": null,
+      "options": {
+        "awslogs-create-group": "true",
+        "awslogs-group": "${cw_log_group}",
+        "awslogs-region": "${region}",
+        "awslogs-stream-prefix": "${cw_log_stream}"
+      }
+    },
+    "family": "fargate-task-definition",
+    "expanded": true,
+    "dependsOn":[
+      {
+         "containerName": "secrets-provider",
+         "condition"    : "SUCCESS"
+      }
+    ],
+    "volumesFrom":[
+      {
+         "sourceContainer": "secrets-provider",
+         "readOnly"       : false
+      }
+    ]
+  }
+]

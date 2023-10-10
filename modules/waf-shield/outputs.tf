@@ -1,0 +1,1 @@
+output "drt_role" { value = aws_iam_role.drt_role.name }
