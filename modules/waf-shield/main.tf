@@ -109,7 +109,7 @@ data "terraform_remote_state" "network" {
 }
 */
 
-data "aws_wafv2_rule_group" "pcm_sanction_cf" {
+data "aws_wafv2_rule_group" "cf_rule_group" {
   name     = "PCMSanctionsRuleGroupCloudFront"
   scope    = "CLOUDFRONT"
   provider =  aws.virginia
@@ -254,14 +254,14 @@ resource "aws_wafv2_web_acl" "waf_wacl_Global" {
 
     statement {
       rule_group_reference_statement {
-        arn = data.aws_wafv2_rule_group.pcm_sanction_cf.arn
+        arn = data.aws_wafv2_rule_group.cf_rule_group.arn
       }
     }
 
     visibility_config {
       cloudwatch_metrics_enabled = true
       sampled_requests_enabled   = true
-      metric_name                = "PCMSanctionsRuleGroupCloudFront"
+      metric_name                = "CF_Rule_Group"
     }
   }
 
@@ -271,7 +271,7 @@ resource "aws_wafv2_web_acl" "waf_wacl_Global" {
 
 }
 
-data "aws_wafv2_rule_group" "pcm_sanction_reg" {
+data "aws_wafv2_rule_group" "regional" {
   name  = "PCMSanctionsRuleGroupRegional"
   scope = "REGIONAL"
 }
@@ -415,14 +415,14 @@ resource "aws_wafv2_web_acl" "waf_wacl_regional" {
 
     statement {
       rule_group_reference_statement {
-        arn = data.aws_wafv2_rule_group.pcm_sanction_reg.arn
+        arn = data.aws_wafv2_rule_group.regional.arn
       }
     }
 
     visibility_config {
       cloudwatch_metrics_enabled = true
       sampled_requests_enabled   = true
-      metric_name                = "PCMSanctionsRuleGroupRegional"
+      metric_name                = "<Regional_Restriction_Group>"
     }
   }
 
